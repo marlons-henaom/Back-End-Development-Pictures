@@ -1,4 +1,9 @@
 import pytest
+
+# First charge the .env file to get the environment variables
+from dotenv import load_dotenv
+load_dotenv()
+
 from backend import app
 
 
