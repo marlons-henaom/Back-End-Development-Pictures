@@ -1,0 +1,29 @@
+version: '3'
+services:
+  python_app_pictures:
+    container_name: python_app_pictures
+    build:
+      context: .
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGODB_SERVICE=${MONGODB_SERVICE}
+      - MONGODB_USERNAME=${MONGODB_USERNAME}
+      - MONGODB_PASSWORD=${MONGODB_PASSWORD}
+      - MONGODB_PORT=${MONGODB_PORT}
+    volumes:
+      - .:/opt/app-root/src
+    depends_on:
+      - mongo_db_pictures
+  mongo_db_pictures:
+    image: mongo:6.0
+    container_name: mongo_db_pictures
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD}
+    ports:
+      - "27017:27017"
+    volumes:
+      - type: bind
+        source: ./data
+        target: /data/db
